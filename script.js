@@ -75,7 +75,7 @@ document.getElementById("votd").onclick = function(){
 document.getElementById("share").onclick = function () {
     navigator.share({
       title: document.title,
-      text: 'Check out this verse from BibleLookup',
+      text: 'Check out this verse from BibleLookup!',
       url: window.location.href
     })
 }
