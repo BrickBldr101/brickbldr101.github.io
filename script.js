@@ -24,27 +24,30 @@ fetchVerse = function(book, verse){
         })
     }
 }
-document.getElementById("submit").onclick = function(){
+
+convertVerse = function(){
     let input = document.getElementById("textbox").value;
     let listInput = input.split(" ");
     let bookRaw = listInput[0];
     let verse  = listInput[1];
+    let chapterRaw = verse.split(":");
+    globalThis.chapter = chapterRaw[0];
+    globalThis.nextChapter = Number(chapter) + 1;
+    globalThis.lastChapter = Number(chapter) - 1;
 
     book = bookRaw.charAt(0).toUpperCase() + bookRaw.slice(1)
 
     fetchVerse(book, verse)
 }
 
+document.getElementById("submit").onclick = function(){
+  convertVerse();
+}
+
+
 input.addEventListener("keypress", function(event) {
   if (event.key == "Enter") {
-    let input = document.getElementById("textbox").value;
-    let listInput = input.split(" ");
-    let bookRaw = listInput[0];
-    let verse  = listInput[1];
-
-    book = bookRaw.charAt(0).toUpperCase() + bookRaw.slice(1)
-
-    fetchVerse(book, verse)
+    convertVerse();
   }
 })
 
@@ -102,3 +105,21 @@ document.getElementById("read").onclick = function(){
   }
 }
 
+document.getElementById("nextChapter").onclick = function(){
+  fetchVerse(book, nextChapter.toString());
+  nextChapter = Number(nextChapter)
+  lastChapter = lastChapter  + 1;
+  nextChapter = nextChapter + 1;
+  chapter = chapter + 1;
+  
+}
+
+document.getElementById("lastChapter").onclick = function(){
+  fetchVerse(book, lastChapter.toString()); 
+  lastChapter = Number(lastChapter)
+  nextChapter = nextChapter - 1
+  lastChapter = lastChapter - 1;
+  chapter = chapter - 1;
+  
+  
+}
