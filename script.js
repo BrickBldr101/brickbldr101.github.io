@@ -93,6 +93,8 @@ fetchVerse("", "")
 document.getElementById("read").onclick = function(){
   let oldText = document.getElementById("verse").textContent
   let text = oldText.replace(/:/g, ", ")
+  text = text.replace(/\b(?!\d+:)\d+\b/g, '');
+  console.log(text);
   speechSynthesis.speak(new SpeechSynthesisUtterance(text));
   document.getElementById("pause").onclick = function(){
     speechSynthesis.pause();
