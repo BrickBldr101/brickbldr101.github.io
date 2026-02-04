@@ -6,13 +6,12 @@
         <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
         <meta http-equiv="Pragma" content="no-cache">
         <meta http-equiv="Expires" content="0">
-        <link rel="stylesheet" href="styles.css?v=1.0.0">
+        <link rel="stylesheet" href="styles.css?1.0.0">
         <title>VOTD - BibleLookup</title>
         <link rel="icon" type="image/png" href="assets/cross.png">
     </head>
     <body>
-        <div class="page">
-            
+        <div class="page"> 
             <div class="header">
                 <div id="headerBox"></div>
                 <div id="VOTD">
@@ -20,28 +19,29 @@
                 </div>
                 <div id="input">
                     <input id="textbox" placeholder="Verse">
-                    <button type="button" id="submit" class="buttons">submit</button>
+                    <button type="button" id="submit" class="buttons">GO</button>
                 </div>
             </div>
             <main>
-            <div id="audio">
-                <br><button type="button" id="read" class="buttons">play</button>
-                <button type="button" id="pause" class="buttons">pause</button>
-                <button type="button" id="resume" class="buttons">resume</button>
-                <button type="button" id="stop" class="buttons">stop</button><br>
-            </div>
-            <p id="verse"></p>
-            <div id="other">
-                <button type="button" id="lastChapter" class="buttons">last chapter</button>
-                <button type="button" id="copy" class="buttons">copy verse</button>
-                <button type="button" id="nextChapter" class="buttons">next chapter</button>
-            </div>
+                <div id="audio">
+                    <br><button type="button" id="read" class="buttons">play</button>
+                    <button type="button" id="pause" class="buttons">pause</button>
+                    <button type="button" id="resume" class="buttons">resume</button>
+                    <button type="button" id="stop" class="buttons">stop</button><br>
+                </div>
+                <p id="verse"></p>
+                <div id="other">
+                    <button type="button" id="lastChapter" class="buttons">last chapter</button>
+                    <button type="button" id="share" class="buttons">share verse</button>
+                    <button type="button" id="nextChapter" class="buttons">next chapter</button>
+                </div>
             </main>
             <div class="footer">
+                <a href="https://brickbldr101.github.io/">BibleLookup</a><br>
                 <a href="https://labs.bible.org/api_web_service">Bible API (NET)</a><br>
                 <a href="https://netbible.org/">NET Bible</a>
             </div>
         </div>
-        <script src="script.js?v=1.0.0"></script>
+        <script src="script.js?v=1.1.0"></script>
     </body>
 </html>

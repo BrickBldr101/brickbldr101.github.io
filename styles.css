@@ -33,7 +33,7 @@ main{
 }
 
 #input{
-    margin-top:1%;
+    margin-top:0.5%;
     margin-right: 10px;
     z-index: 2;
     
@@ -41,7 +41,7 @@ main{
 }
 
 #VOTD{
-    margin-top: 1%;
+    margin-top: 0.5%;
     margin-left: 10px;
     z-index: 2;
     flex: 1;

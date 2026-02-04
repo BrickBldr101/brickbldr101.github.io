@@ -1,29 +1,46 @@
 //https://labs.bible.org/api/?passage=John%203:16
-fetchVerse = function(book, verse){
-    if (book == "" || verse == ""){
-        fetch("https://labs.bible.org/api/?passage=votd").then(response => {
-            if (!response.ok){
-                throw new Error("Network was not ok");
-            }
-            return response.text();
-        }).then(text => {
-            document.getElementById("verse").innerHTML = text;
-            document.title = "VOTD - BibleLookup";
-        })
-    }
-    else{
-        fetch("https://labs.bible.org/api/?passage="+book+"%20"+verse).then(response => {
-            if (!response.ok){
-                throw new Error("Network was not ok");
-            }
-            return response.text();
-        }).then(text => {
-            document.getElementById("verse").innerHTML = book.bold() + " ";
-            document.getElementById("verse").innerHTML = document.getElementById("verse").innerHTML + text;
-            document.title = book + " " + verse + " - BibleLookup";
-        })
-    }
-}
+fetchVerse = function (book, verse, push = true) {
+  let url;
+
+  if (book === "" || verse === "") {
+    url = "https://labs.bible.org/api/?passage=votd";
+
+    fetch(url)
+      .then(r => r.text())
+      .then(text => {
+        document.getElementById("verse").innerHTML = text;
+        document.title = "VOTD - BibleLookup";
+
+        if (push) {
+          history.pushState(
+            { book: "", verse: "" },
+            "",
+            "/"
+          );
+        }
+      });
+
+  } else {
+    url = `https://labs.bible.org/api/?passage=${book}%20${verse}`;
+
+    fetch(url)
+      .then(r => r.text())
+      .then(text => {
+        document.getElementById("verse").innerHTML =
+          `<strong>${book}</strong> ` + text;
+
+        document.title = `${book} ${verse} - BibleLookup`;
+
+        if (push) {
+          history.pushState(
+            { book, verse },
+            "",
+            `?book=${encodeURIComponent(book)}&verse=${encodeURIComponent(verse)}`
+          );
+        }
+      });
+  }
+};
 
 convertVerse = function(){
     let input = document.getElementById("textbox").value;
@@ -55,40 +72,14 @@ document.getElementById("votd").onclick = function(){
   fetchVerse("", "")
 }
 
-document.getElementById("copy").onclick = function () {
-  const text = document.getElementById("verse").textContent;
-
-  if (navigator.clipboard && window.isSecureContext) {
-    navigator.clipboard.writeText(text).then(() => {
-      alert("Copied!");
-    }).catch(() => {
-      fallbackCopy(text);
-    });
-  } else {
-    fallbackCopy(text);
-  }
-};
-
-function fallbackCopy(text) {
-  const textarea = document.createElement("textarea");
-  textarea.value = text;
-  textarea.style.position = "fixed";
-  document.body.appendChild(textarea);
-  textarea.focus();
-  textarea.select();
-
-  try {
-    document.execCommand("copy");
-    alert("Copied!");
-  } catch (err) {
-    alert("Copy failed");
-  }
-
-  document.body.removeChild(textarea);
+document.getElementById("share").onclick = function () {
+    navigator.share({
+      title: document.title,
+      text: 'Check out this verse from BibleLookup',
+      url: window.location.href
+    })
 }
 
-// Put up the VOTD upon loading
-fetchVerse("", "")
 
 document.getElementById("read").onclick = function(){
   let oldText = document.getElementById("verse").textContent
@@ -125,3 +116,17 @@ document.getElementById("lastChapter").onclick = function(){
   
   
 }
+
+function loadFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  const book = params.get("book");
+  const verse = params.get("verse");
+
+  if (book && verse) {
+    fetchVerse(book, verse, false);
+  } else {
+    fetchVerse("", "", false); // VOTD
+  }
+}
+
+loadFromURL();
