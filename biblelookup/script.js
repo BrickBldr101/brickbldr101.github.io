@@ -68,10 +68,6 @@ input.addEventListener("keypress", function(event) {
   }
 })
 
-document.getElementById("votd").onclick = function(){
-  fetchVerse("", "")
-}
-
 document.getElementById("share").onclick = function () {
     navigator.share({
       title: document.title,
