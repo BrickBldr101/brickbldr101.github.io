@@ -7,27 +7,27 @@ let lastChapter = 1;
 // Fetch chapter and highlight optional range
 fetchVerse = function(selectedBook, selectedChapter, highlightVerse = null) {
   book = selectedBook;
-  chapter = selectedChapter;
+  chapter = Number(selectedChapter); // ensure numeric
 
   fetch('./KJV/' + selectedBook + '.json')
     .then(response => response.json())
     .then(data => {
-      const verses = data.chapters[selectedChapter - 1].verses;
+      const verses = data.chapters[chapter - 1].verses;
       const verseContainer = document.getElementById("verse");
       verseContainer.innerHTML = ""; // clear previous
 
       // Parse highlight range if provided
       let highlightStart = null, highlightEnd = null;
       if (highlightVerse) {
-          if (highlightVerse.includes('-')) {
-              [highlightStart, highlightEnd] = highlightVerse.split('-').map(Number);
-          } else {
-              highlightStart = highlightEnd = Number(highlightVerse);
-          }
-          selectedRange.start = highlightStart;
-          selectedRange.end = highlightEnd;
+        if (highlightVerse.includes('-')) {
+          [highlightStart, highlightEnd] = highlightVerse.split('-').map(Number);
+        } else {
+          highlightStart = highlightEnd = Number(highlightVerse);
+        }
+        selectedRange.start = highlightStart;
+        selectedRange.end = highlightEnd;
       } else {
-          selectedRange.start = selectedRange.end = null;
+        selectedRange.start = selectedRange.end = null;
       }
 
       // Display verses
@@ -36,9 +36,10 @@ fetchVerse = function(selectedBook, selectedChapter, highlightVerse = null) {
         p.textContent = `${v.verse}. ${v.text}`;
         p.style.cursor = "pointer";
 
-        // Highlight if in selected range
-        if ((highlightStart !== null && v.verse >= highlightStart && v.verse <= highlightEnd) ||
-            (selectedRange.start !== null && v.verse >= selectedRange.start && v.verse <= selectedRange.end)) {
+        // Highlight if in selected range (including URL)
+        if (selectedRange.start !== null &&
+            v.verse >= selectedRange.start &&
+            v.verse <= selectedRange.end) {
           p.style.backgroundColor = "#ffff99";
         }
 
@@ -46,17 +47,14 @@ fetchVerse = function(selectedBook, selectedChapter, highlightVerse = null) {
         p.onclick = function() {
           const verseNum = v.verse;
 
-          // If clicked inside the selected range → deselect
           if (selectedRange.start !== null &&
               verseNum >= selectedRange.start &&
               verseNum <= selectedRange.end) {
             selectedRange.start = selectedRange.end = null;
           } else if (selectedRange.start === null) {
-            // Start new selection
             selectedRange.start = verseNum;
             selectedRange.end = verseNum;
           } else {
-            // Expand selection
             selectedRange.end = verseNum;
             if (selectedRange.end < selectedRange.start) {
               [selectedRange.start, selectedRange.end] = [selectedRange.end, selectedRange.start];
@@ -81,7 +79,6 @@ fetchVerse = function(selectedBook, selectedChapter, highlightVerse = null) {
     })
     .catch(error => console.error(error));
 };
-
 
 // Populate chapters based on selected book
 function populateChapters(bookSelectValue) {
@@ -126,10 +123,18 @@ function loadFromURL() {
   if (urlBook && urlChapter) {
     bookSelect.value = urlBook;
     populateChapters(urlBook);
-    chapterSelect.value = urlChapter;
-    fetchVerse(urlBook, urlChapter, urlVerse);
+
+    const chapterNum = Number(urlChapter);
+    chapterSelect.value = chapterNum;
+
+    fetchVerse(urlBook, chapterNum, urlVerse); // automatically highlights verses
+
+    nextChapter = chapterNum + 1;
+    lastChapter = chapterNum - 1;
   } else {
     fetchVerse(bookSelect.value, 1);
+    nextChapter = 2;
+    lastChapter = 0;
   }
 }
 
@@ -180,39 +185,39 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // Share button - only shares highlighted verses
-document.getElementById("share").onclick = function () {
-  const bookVal = document.getElementById("book-select").value;
-  const chapterVal = document.getElementById("chapter-select").value;
-  const params = new URLSearchParams();
-  params.set("book", bookVal);
-  params.set("chapter", chapterVal);
+  document.getElementById("share").onclick = function () {
+    const bookVal = document.getElementById("book-select").value;
+    const chapterVal = document.getElementById("chapter-select").value;
+    const params = new URLSearchParams();
+    params.set("book", bookVal);
+    params.set("chapter", chapterVal);
 
-  let verseText = "";
+    let verseText = "";
 
-  if (selectedRange.start !== null && selectedRange.end !== null) {
-    if (selectedRange.start === selectedRange.end) {
-      params.set("verse", selectedRange.start);
-    } else {
-      params.set("verse", `${selectedRange.start}-${selectedRange.end}`);
+    if (selectedRange.start !== null && selectedRange.end !== null) {
+      if (selectedRange.start === selectedRange.end) {
+        params.set("verse", selectedRange.start);
+      } else {
+        params.set("verse", `${selectedRange.start}-${selectedRange.end}`);
+      }
+
+      // Only get highlighted verses
+      const verseContainer = document.getElementById("verse");
+      const highlightedVerses = Array.from(verseContainer.querySelectorAll("p")).filter(p => {
+        const verseNum = Number(p.textContent.split('.')[0]);
+        return verseNum >= selectedRange.start && verseNum <= selectedRange.end;
+      });
+
+      verseText = highlightedVerses.map(p => p.textContent).join('\n');
     }
 
-    // Only get highlighted verses
-    const verseContainer = document.getElementById("verse");
-    const highlightedVerses = Array.from(verseContainer.querySelectorAll("p")).filter(p => {
-      const verseNum = Number(p.textContent.split('.')[0]);
-      return verseNum >= selectedRange.start && verseNum <= selectedRange.end;
+    navigator.share({
+      title: `${bookVal} ${chapterVal}`,
+      text: verseText,
+      url: `${window.location.pathname}?${params.toString()}`
     });
+  };
 
-    verseText = highlightedVerses.map(p => p.textContent).join('\n');
-  }
-
-  navigator.share({
-    title: `${bookVal} ${chapterVal}`,
-    text: verseText,
-    url: `${window.location.pathname}?${params.toString()}`
-  });
-};
-
-  // Load initial state from URL
+  // Load initial state from URL (highlights verses automatically)
   loadFromURL();
 });
