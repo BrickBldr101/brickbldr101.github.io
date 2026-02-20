@@ -180,27 +180,38 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // Share button - only shares highlighted verses
-  document.getElementById("share").onclick = function () {
-    const bookVal = document.getElementById("book-select").value;
-    const chapterVal = document.getElementById("chapter-select").value;
-    const params = new URLSearchParams();
-    params.set("book", bookVal);
-    params.set("chapter", chapterVal);
+document.getElementById("share").onclick = function () {
+  const bookVal = document.getElementById("book-select").value;
+  const chapterVal = document.getElementById("chapter-select").value;
+  const params = new URLSearchParams();
+  params.set("book", bookVal);
+  params.set("chapter", chapterVal);
 
-    if (selectedRange.start !== null && selectedRange.end !== null) {
-      if (selectedRange.start === selectedRange.end) {
-        params.set("verse", selectedRange.start);
-      } else {
-        params.set("verse", `${selectedRange.start}-${selectedRange.end}`);
-      }
+  let verseText = "";
+
+  if (selectedRange.start !== null && selectedRange.end !== null) {
+    if (selectedRange.start === selectedRange.end) {
+      params.set("verse", selectedRange.start);
+    } else {
+      params.set("verse", `${selectedRange.start}-${selectedRange.end}`);
     }
 
-    navigator.share({
-      title: `${bookVal} ${chapterVal}`,
-      text: `"${document.getElementById("verse").textContent}"\n\n`,
-      url: `${window.location.pathname}?${params.toString()}`
+    // Only get highlighted verses
+    const verseContainer = document.getElementById("verse");
+    const highlightedVerses = Array.from(verseContainer.querySelectorAll("p")).filter(p => {
+      const verseNum = Number(p.textContent.split('.')[0]);
+      return verseNum >= selectedRange.start && verseNum <= selectedRange.end;
     });
-  };
+
+    verseText = highlightedVerses.map(p => p.textContent).join('\n');
+  }
+
+  navigator.share({
+    title: `${bookVal} ${chapterVal}`,
+    text: verseText,
+    url: `${window.location.pathname}?${params.toString()}`
+  });
+};
 
   // Load initial state from URL
   loadFromURL();
