@@ -1,4 +1,4 @@
-<!-- v1.2.0 -->
+<!-- v1.2.1 -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +13,7 @@
         <meta property="og:image" content="https://brickbldr101.github.io/biblelookup/assets/cross.png">
         <meta property="og:url" content="https://brickbldr101.github.io/">
         <meta property="og:type" content="website">
-        <link rel="stylesheet" href="styles.css?1.0.1">
+        <link rel="stylesheet" href="styles.css?1.0.2">
         <title>VOTD - BibleLookup</title>
         <link rel="icon" type="image/png" href="assets/cross.png">
     </head>
@@ -32,12 +32,79 @@
             </div>
             <main>
                 <h1>BibleLookup</h1>
-                <div id="audio">
-                    <br><button type="button" id="read" class="buttons"><img src="assets/headphones.svg"></button>
-                    <button type="button" id="stop" class="buttons"><img src="assets/stop.svg"></button>
-                    <button type="button" id="resume" class="buttons"><img src="assets/play.svg"></button>
-                    <button type="button" id="pause" class="buttons"><img src="assets/pause.svg"></button>
-                </div>
+                <select name="book" id="book-select">
+                    <!-- Old Testament -->
+                    <option value="Genesis">Genesis</option>
+                    <option value="Exodus">Exodus</option>
+                    <option value="Leviticus">Leviticus</option>
+                    <option value="Numbers">Numbers</option>
+                    <option value="Deuteronomy">Deuteronomy</option>
+                    <option value="Joshua">Joshua</option>
+                    <option value="Judges">Judges</option>
+                    <option value="Ruth">Ruth</option>
+                    <option value="1Samuel">1 Samuel</option>
+                    <option value="2Samuel">2 Samuel</option>
+                    <option value="1Kings">1 Kings</option>
+                    <option value="2Kings">2 Kings</option>
+                    <option value="1Chronicles">1 Chronicles</option>
+                    <option value="2Chronicles">2 Chronicles</option>
+                    <option value="Ezra">Ezra</option>
+                    <option value="Nehemiah">Nehemiah</option>
+                    <option value="Esther">Esther</option>
+                    <option value="Job">Job</option>
+                    <option value="Psalms">Psalms</option>
+                    <option value="Proverbs">Proverbs</option>
+                    <option value="Ecclesiastes">Ecclesiastes</option>
+                    <option value="SongsofSolomon">Song of Solomon</option>
+                    <option value="Isaiah">Isaiah</option>
+                    <option value="Jeremiah">Jeremiah</option>
+                    <option value="Lamentations">Lamentations</option>
+                    <option value="Ezekiel">Ezekiel</option>
+                    <option value="Daniel">Daniel</option>
+                    <option value="Hosea">Hosea</option>
+                    <option value="Joel">Joel</option>
+                    <option value="Amos">Amos</option>
+                    <option value="Obadiah">Obadiah</option>
+                    <option value="Jonah">Jonah</option>
+                    <option value="Micah">Micah</option>
+                    <option value="Nahum">Nahum</option>
+                    <option value="Habakkuk">Habakkuk</option>
+                    <option value="Zephaniah">Zephaniah</option>
+                    <option value="Haggai">Haggai</option>
+                    <option value="Zechariah">Zechariah</option>
+                    <option value="Malachi">Malachi</option>
+
+                    <!-- New Testament -->
+                    <option value="Matthew">Matthew</option>
+                    <option value="Mark">Mark</option>
+                    <option value="Luke">Luke</option>
+                    <option value="John">John</option>
+                    <option value="Acts">Acts</option>
+                    <option value="Romans">Romans</option>
+                    <option value="1Corinthians">1 Corinthians</option>
+                    <option value="2Corinthians">2 Corinthians</option>
+                    <option value="Galatians">Galatians</option>
+                    <option value="Ephesians">Ephesians</option>
+                    <option value="Philippians">Philippians</option>
+                    <option value="Colossians">Colossians</option>
+                    <option value="1Thessalonians">1 Thessalonians</option>
+                    <option value="2Thessalonians">2 Thessalonians</option>
+                    <option value="1Timothy">1 Timothy</option>
+                    <option value="2Timothy">2 Timothy</option>
+                    <option value="Titus">Titus</option>
+                    <option value="Philemon">Philemon</option>
+                    <option value="Hebrews">Hebrews</option>
+                    <option value="James">James</option>
+                    <option value="1Peter">1 Peter</option>
+                    <option value="2Peter">2 Peter</option>
+                    <option value="1John">1 John</option>
+                    <option value="2John">2 John</option>
+                    <option value="3John">3 John</option>
+                    <option value="Jude">Jude</option>
+                    <option value="Revelation">Revelation</option>
+                </select>
+                <select name="chapter" id="chapter-select">
+                </select>
                 <p id="verse"></p>
                 <div id="other">
                     <button type="button" id="lastChapter" class="buttons"><img src="assets/skip-backward.svg"></button>
@@ -51,6 +118,6 @@
                 <a href="https://netbible.org/">NET Bible</a>
             </div>
         </div>
-        <script src="script.js?v=1.1.2"></script>
+        <script src="script.js?v=1.2.0"></script>
     </body>
 </html>
