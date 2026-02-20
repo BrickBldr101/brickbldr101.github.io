@@ -168,20 +168,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Next chapter
   document.getElementById("nextChapter").onclick = function() {
-    fetchVerse(book, nextChapter.toString());
-    lastChapter = nextChapter - 1;
-    nextChapter = nextChapter + 1;
-    chapter = Number(chapter) + 1;
-    selectedRange.start = selectedRange.end = null;
+    const currentChapter = Number(document.getElementById("chapter-select").value);
+    fetchVerse(bookSelect.value, currentChapter + 1);
+    document.getElementById("chapter-select").value = currentChapter + 1;
   };
 
   // Previous chapter
   document.getElementById("lastChapter").onclick = function() {
-    fetchVerse(book, lastChapter.toString());
-    nextChapter = lastChapter + 1;
-    lastChapter = lastChapter - 1;
-    chapter = Number(chapter) - 1;
-    selectedRange.start = selectedRange.end = null;
+    const currentChapter = Number(document.getElementById("chapter-select").value);
+    fetchVerse(bookSelect.value, currentChapter - 1);
+    document.getElementById("chapter-select").value = currentChapter - 1;
   };
 
   // Share button - only shares highlighted verses
