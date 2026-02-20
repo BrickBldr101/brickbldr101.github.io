@@ -126,10 +126,19 @@ function loadFromURL() {
   if (urlBook && urlChapter) {
     bookSelect.value = urlBook;
     populateChapters(urlBook);
-    chapterSelect.value = urlChapter;
-    fetchVerse(urlBook, urlChapter, urlVerse);
+
+    const chapterNum = Number(urlChapter); // make sure it's a number
+    chapterSelect.value = chapterNum;
+
+    fetchVerse(urlBook, chapterNum, urlVerse); // pass verse range if present
+
+    // Update next/last chapter for navigation
+    nextChapter = chapterNum + 1;
+    lastChapter = chapterNum - 1;
   } else {
     fetchVerse(bookSelect.value, 1);
+    nextChapter = 2;
+    lastChapter = 0;
   }
 }
 
@@ -180,6 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // Share button - only shares highlighted verses
+// Share button - only shares highlighted verses
 document.getElementById("share").onclick = function () {
   const bookVal = document.getElementById("book-select").value;
   const chapterVal = document.getElementById("chapter-select").value;
