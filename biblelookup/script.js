@@ -1,22 +1,22 @@
-let selectedRange = { start: null, end: null }; // currently selected verse range
+
+
+let selectedRange = { start: null, end: null };
 let book = "";
 let chapter = "";
 let nextChapter = 1;
 let lastChapter = 1;
 
-// Fetch chapter and highlight optional range
 fetchVerse = function(selectedBook, selectedChapter, highlightVerse = null) {
   book = selectedBook;
-  chapter = Number(selectedChapter); // ensure numeric
+  chapter = Number(selectedChapter);
 
   fetch('./KJV/' + selectedBook + '.json')
     .then(response => response.json())
     .then(data => {
       const verses = data.chapters[chapter - 1].verses;
       const verseContainer = document.getElementById("verse");
-      verseContainer.innerHTML = ""; // clear previous
+      verseContainer.innerHTML = "";
 
-      // Parse highlight range if provided
       let highlightStart = null, highlightEnd = null;
       if (highlightVerse) {
         if (highlightVerse.includes('-')) {
@@ -30,20 +30,18 @@ fetchVerse = function(selectedBook, selectedChapter, highlightVerse = null) {
         selectedRange.start = selectedRange.end = null;
       }
 
-      // Display verses
       verses.forEach(v => {
-        const p = document.createElement("p");
-        p.textContent = `${v.verse}. ${v.text}`;
+        const p = document.createElement("span");
+        
+        p.innerHTML = `<b>${v.verse}</b> ${v.text} `
         p.style.cursor = "pointer";
 
-        // Highlight if in selected range (including URL)
         if (selectedRange.start !== null &&
             v.verse >= selectedRange.start &&
             v.verse <= selectedRange.end) {
           p.style.backgroundColor = "#ffff99";
         }
 
-        // Click to select/deselect range
         p.onclick = function() {
           const verseNum = v.verse;
 
@@ -61,7 +59,6 @@ fetchVerse = function(selectedBook, selectedChapter, highlightVerse = null) {
             }
           }
 
-          // Update highlights
           verseContainer.querySelectorAll("p").forEach(pp => {
             const vn = Number(pp.textContent.split('.')[0]);
             if (selectedRange.start !== null &&
@@ -80,7 +77,6 @@ fetchVerse = function(selectedBook, selectedChapter, highlightVerse = null) {
     .catch(error => console.error(error));
 };
 
-// Populate chapters based on selected book
 function populateChapters(bookSelectValue) {
   const chapterSelect = document.getElementById("chapter-select");
   const bookChapters = {
@@ -110,7 +106,6 @@ function populateChapters(bookSelectValue) {
   }
 }
 
-// Load chapter and optional highlighted verse from URL
 function loadFromURL() {
   const params = new URLSearchParams(window.location.search);
   const urlBook = params.get("book");
@@ -127,7 +122,7 @@ function loadFromURL() {
     const chapterNum = Number(urlChapter);
     chapterSelect.value = chapterNum;
 
-    fetchVerse(urlBook, chapterNum, urlVerse); // automatically highlights verses
+    fetchVerse(urlBook, chapterNum, urlVerse);
 
     nextChapter = chapterNum + 1;
     lastChapter = chapterNum - 1;
@@ -138,16 +133,14 @@ function loadFromURL() {
   }
 }
 
-// DOMContentLoaded
+
 document.addEventListener("DOMContentLoaded", () => {
   const bookSelect = document.getElementById("book-select");
   const chapterSelect = document.getElementById("chapter-select");
 
-  // Initial load
   populateChapters(bookSelect.value);
   fetchVerse(bookSelect.value, 1);
 
-  // Book change
   bookSelect.addEventListener("change", (event) => {
     const selectedBook = event.target.value;
     populateChapters(selectedBook);
@@ -157,7 +150,6 @@ document.addEventListener("DOMContentLoaded", () => {
     lastChapter = 0;
   });
 
-  // Chapter change
   chapterSelect.addEventListener("change", (event) => {
     const selectedChapter = event.target.value;
     fetchVerse(bookSelect.value, selectedChapter);
@@ -166,21 +158,18 @@ document.addEventListener("DOMContentLoaded", () => {
     lastChapter = Number(selectedChapter) - 1;
   });
 
-  // Next chapter
   document.getElementById("nextChapter").onclick = function() {
     const currentChapter = Number(document.getElementById("chapter-select").value);
     fetchVerse(bookSelect.value, currentChapter + 1);
     document.getElementById("chapter-select").value = currentChapter + 1;
   };
 
-  // Previous chapter
   document.getElementById("lastChapter").onclick = function() {
     const currentChapter = Number(document.getElementById("chapter-select").value);
     fetchVerse(bookSelect.value, currentChapter - 1);
     document.getElementById("chapter-select").value = currentChapter - 1;
   };
 
-  // Share button - only shares highlighted verses
   document.getElementById("share").onclick = function () {
     const bookVal = document.getElementById("book-select").value;
     const chapterVal = document.getElementById("chapter-select").value;
@@ -197,7 +186,6 @@ document.addEventListener("DOMContentLoaded", () => {
         params.set("verse", `${selectedRange.start}-${selectedRange.end}`);
       }
 
-      // Only get highlighted verses
       const verseContainer = document.getElementById("verse");
       const highlightedVerses = Array.from(verseContainer.querySelectorAll("p")).filter(p => {
         const verseNum = Number(p.textContent.split('.')[0]);
@@ -214,6 +202,5 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  // Load initial state from URL (highlights verses automatically)
   loadFromURL();
 });
