@@ -1,4 +1,5 @@
 //https://labs.bible.org/api/?passage=John%203:16
+/*
 fetchVerse = function (book, verse, push = true) {
   let url;
 
@@ -41,7 +42,7 @@ fetchVerse = function (book, verse, push = true) {
       });
   }
 };
-
+*/
 convertVerse = function(){
     let input = document.getElementById("textbox").value;
     let listInput = input.split(" ");
