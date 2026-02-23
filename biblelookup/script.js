@@ -1,98 +1,86 @@
-
-
+// variables
 let selectedRange = { start: null, end: null };
 let book = "";
 let chapter = "";
 let nextChapter = 1;
 let lastChapter = 1;
 
-fetchVerse = function(selectedBook, selectedChapter, highlightVerse = null) {
+fetchVerse = function(selectedBook, selectedChapter, translation, highlightVerse = null) {
   book = selectedBook;
   chapter = Number(selectedChapter);
 
-  fetch('./KJV/' + selectedBook + '.json')
+  if (translation == undefined){
+    translation = "WEB"
+  }
+
+  fetch(`./Bible/${translation}/${selectedBook}.json`)
     .then(response => response.json())
     .then(data => {
-      const verses = data.chapters[chapter - 1].verses;
+
+      const chapterData = data[selectedBook][chapter];
       const verseContainer = document.getElementById("verse");
       verseContainer.innerHTML = "";
 
-      let highlightStart = null, highlightEnd = null;
-      if (highlightVerse) {
-        if (highlightVerse.includes('-')) {
-          [highlightStart, highlightEnd] = highlightVerse.split('-').map(Number);
-        } else {
-          highlightStart = highlightEnd = Number(highlightVerse);
-        }
-        selectedRange.start = highlightStart;
-        selectedRange.end = highlightEnd;
-      } else {
-        selectedRange.start = selectedRange.end = null;
-      }
+      Object.keys(chapterData).forEach(verseNum => {
+        const text = chapterData[verseNum];
 
-      verses.forEach(v => {
-        const p = document.createElement("span");
-        
-        p.innerHTML = `<b>${v.verse}</b> ${v.text} `
-        p.style.cursor = "pointer";
+        const span = document.createElement("span");
+        span.innerHTML = `<b>${verseNum}</b> ${text} `;
+        span.style.cursor = "pointer";
+
+        const vNum = Number(verseNum);
 
         if (selectedRange.start !== null &&
-            v.verse >= selectedRange.start &&
-            v.verse <= selectedRange.end) {
-          p.style.backgroundColor = "#ffff99";
+            vNum >= selectedRange.start &&
+            vNum <= selectedRange.end) {
+          span.style.backgroundColor = "#ffff99";
         }
 
-        p.onclick = function() {
-          const verseNum = v.verse;
+        span.onclick = function() {
 
           if (selectedRange.start !== null &&
-              verseNum >= selectedRange.start &&
-              verseNum <= selectedRange.end) {
+              vNum >= selectedRange.start &&
+              vNum <= selectedRange.end) {
             selectedRange.start = selectedRange.end = null;
           } else if (selectedRange.start === null) {
-            selectedRange.start = verseNum;
-            selectedRange.end = verseNum;
+            selectedRange.start = vNum;
+            selectedRange.end = vNum;
           } else {
-            selectedRange.end = verseNum;
+            selectedRange.end = vNum;
+
             if (selectedRange.end < selectedRange.start) {
-              [selectedRange.start, selectedRange.end] = [selectedRange.end, selectedRange.start];
+              [selectedRange.start, selectedRange.end] =
+              [selectedRange.end, selectedRange.start];
             }
           }
 
-          verseContainer.querySelectorAll("p").forEach(pp => {
-            const vn = Number(pp.textContent.split('.')[0]);
-            if (selectedRange.start !== null &&
-                vn >= selectedRange.start &&
-                vn <= selectedRange.end) {
-              pp.style.backgroundColor = "#ffff99";
-            } else {
-              pp.style.backgroundColor = "";
-            }
-          });
+          fetchVerse(book, chapter, translation); // re-render
         };
 
-        verseContainer.appendChild(p);
+        verseContainer.appendChild(span);
       });
+
     })
     .catch(error => console.error(error));
 };
 
+// make the chapters based on the book
 function populateChapters(bookSelectValue) {
   const chapterSelect = document.getElementById("chapter-select");
   const bookChapters = {
     "Genesis":50,"Exodus":40,"Leviticus":27,"Numbers":36,"Deuteronomy":34,
-    "Joshua":24,"Judges":21,"Ruth":4,"1Samuel":31,"2Samuel":24,
-    "1Kings":22,"2Kings":25,"1Chronicles":29,"2Chronicles":36,
-    "Ezra":10,"Nehemiah":13,"Esther":10,"Job":42,"Psalms":150,
+    "Joshua":24,"Judges":21,"Ruth":4,"1 Samuel":31,"2 Samuel":24,
+    "1 Kings":22," 2Kings":25,"1 Chronicles":29,"2 Chronicles":36,
+    "Ezra":10,"Nehemiah":13,"Esther":10,"Job":42,"Psalm":150,
     "Proverbs":31,"Ecclesiastes":12,"Song of Solomon":8,"Isaiah":66,
     "Jeremiah":52,"Lamentations":5,"Ezekiel":48,"Daniel":12,"Hosea":14,
     "Joel":3,"Amos":9,"Obadiah":1,"Jonah":4,"Micah":7,"Nahum":3,
     "Habakkuk":3,"Zephaniah":3,"Haggai":2,"Zechariah":14,"Malachi":4,
     "Matthew":28,"Mark":16,"Luke":24,"John":21,"Acts":28,"Romans":16,
-    "1Corinthians":16,"2Corinthians":13,"Galatians":6,"Ephesians":6,
-    "Philippians":4,"Colossians":4,"1Thessalonians":5,"2Thessalonians":3,
-    "1Timothy":6,"2Timothy":4,"Titus":3,"Philemon":1,"Hebrews":13,
-    "James":5,"1Peter":5,"2Peter":3,"1John":5,"2John":1,"3John":1,
+    "1 Corinthians":16,"2 Corinthians":13,"Galatians":6,"Ephesians":6,
+    "Philippians":4,"Colossians":4,"1 Thessalonians":5,"2 Thessalonians":3,
+    "1 Timothy":6,"2 Timothy":4,"Titus":3,"Philemon":1,"Hebrews":13,
+    "James":5,"1 Peter":5,"2 Peter":3,"1 John":5,"2 John":1,"3 John":1,
     "Jude":1,"Revelation":22
   };
 
@@ -106,6 +94,7 @@ function populateChapters(bookSelectValue) {
   }
 }
 
+// load book and chapter based on the url
 function loadFromURL() {
   const params = new URLSearchParams(window.location.search);
   const urlBook = params.get("book");
@@ -137,14 +126,15 @@ function loadFromURL() {
 document.addEventListener("DOMContentLoaded", () => {
   const bookSelect = document.getElementById("book-select");
   const chapterSelect = document.getElementById("chapter-select");
+  const translationSelect = document.getElementById("translation-select");
 
   populateChapters(bookSelect.value);
   fetchVerse(bookSelect.value, 1);
 
   bookSelect.addEventListener("change", (event) => {
     const selectedBook = event.target.value;
-    populateChapters(selectedBook);
-    fetchVerse(selectedBook, 1);
+    populateChapters(selectedBook, chapterSelect.value);
+    fetchVerse(selectedBook, 1, translationSelect.value);
     selectedRange.start = selectedRange.end = null;
     nextChapter = 2;
     lastChapter = 0;
@@ -152,11 +142,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   chapterSelect.addEventListener("change", (event) => {
     const selectedChapter = event.target.value;
-    fetchVerse(bookSelect.value, selectedChapter);
+    fetchVerse(bookSelect.value, selectedChapter, translationSelect.value);
     selectedRange.start = selectedRange.end = null;
     nextChapter = Number(selectedChapter) + 1;
     lastChapter = Number(selectedChapter) - 1;
   });
+
+  
+  translationSelect.addEventListener("change", (event) => {
+    const selectedTranslation = event.target.value;
+    fetchVerse(bookSelect.value, chapterSelect.value, selectedTranslation)
+  })
+
 
   document.getElementById("nextChapter").onclick = function() {
     const currentChapter = Number(document.getElementById("chapter-select").value);
@@ -170,6 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("chapter-select").value = currentChapter - 1;
   };
 
+  /*
   document.getElementById("share").onclick = function () {
     const bookVal = document.getElementById("book-select").value;
     const chapterVal = document.getElementById("chapter-select").value;
@@ -202,5 +200,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
+  */
   loadFromURL();
 });
