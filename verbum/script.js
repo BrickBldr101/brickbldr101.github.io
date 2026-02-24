@@ -190,40 +190,29 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("chapter-select").value = currentChapter - 1;
   };
 
-  /*
+  
   document.getElementById("share").onclick = function () {
-    const bookVal = document.getElementById("book-select").value;
-    const chapterVal = document.getElementById("chapter-select").value;
-    const params = new URLSearchParams();
-    params.set("book", bookVal);
-    params.set("chapter", chapterVal);
-
-    let verseText = "";
-
-    if (selectedRange.start !== null && selectedRange.end !== null) {
-      if (selectedRange.start === selectedRange.end) {
-        params.set("verse", selectedRange.start);
-      } else {
-        params.set("verse", `${selectedRange.start}-${selectedRange.end}`);
-      }
-
-      const verseContainer = document.getElementById("verse");
-      const highlightedVerses = Array.from(verseContainer.querySelectorAll("p")).filter(p => {
-        const verseNum = Number(p.textContent.split('.')[0]);
-        return verseNum >= selectedRange.start && verseNum <= selectedRange.end;
+      if (selectedRange.start == null){
+      navigator.share({
+        title: `${book} ${chapter}`,
+        text: `${book} ${chapter} on Verbum`,
+        url: `${window.location.pathname}`
       });
-
-      verseText = highlightedVerses.map(p => p.textContent).join('\n');
+    } else if (selectedRange.start == selectedRange.end){
+      navigator.share({
+        title: `${book} ${chapter}`,
+        text: `${book} ${chapter}:${selectedRange.start} on Verbum`,
+        url: `${window.location.pathname}`
+      });
+    } else if (selectedRange.start != selectedRange.end){
+      navigator.share({
+        title: `${book} ${chapter}`,
+        text: `${book} ${chapter}:${selectedRange.start}-${selectedRange.end} on Verbum`,
+        url: `${window.location.pathname}`
+      });
     }
-
-    navigator.share({
-      title: `${bookVal} ${chapterVal}`,
-      text: verseText,
-      url: `${window.location.pathname}?${params.toString()}`
-    });
   };
 
-  */
-  //loadFromURL();
+
   
 });
