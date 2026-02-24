@@ -66,7 +66,9 @@
                 <h2>3: Your Identity Is Secure</h2>
                 <p>Sometimes we’re ashamed because we’re unsure of who we are.</p>
                 <p>But Romans 8:38–39 says nothing can separate us from the love of God.</p>
-                <a href="/?book=2+Corinthians&chapter=5&selectRangeStart=17&selectRangeEnd=17">Therefore if anyone is in Christ, he is a new creation. The old things have passed away. Behold, all things have become new.</a>
+                <br>
+                <br>
+                <a href="/?book=2+Corinthians&chapter=5&selectRangeStart=17&selectRangeEnd=17">Therefore if anyone is in Christ, he is a new creation. The old things have passed away. Behold, all things have become new.<br>2 Corinthians 5:17 WEB</a><br><br>
                 <p>You are not defined by:</p>
                 <p>-Your mistakes</p>
                 <p>-Your friend group</p>
@@ -97,5 +99,14 @@
             </div>
         </div>
         <script src="script.js?v=2.1.1"></script>
+        <script>
+            fetch("header.html")
+            .then(response => response.text())
+            .then(data => document.getElementById("header").innerHTML = data);
+
+            fetch("footer.html")
+            .then(response => response.text())
+            .then(data => document.getElementById("footer").innerHTML = data);
+        </script>
     </body>
 </html>

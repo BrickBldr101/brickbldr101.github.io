@@ -33,5 +33,14 @@
             </div>
         </div>
         <script src="script.js?v=2.1.1"></script>
+        <script>
+            fetch("/other/header.html")
+            .then(response => response.text())
+            .then(data => document.getElementById("header").innerHTML = data);
+
+            fetch("/other/footer.html")
+            .then(response => response.text())
+            .then(data => document.getElementById("footer").innerHTML = data);
+        </script>
     </body>
 </html>
