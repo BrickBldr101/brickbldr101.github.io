@@ -75,8 +75,6 @@ function updateURL(book, chapter) {
     url.searchParams.set('selectRangeStart', selectedRange.start)
     url.searchParams.set('selectRangeEnd', selectedRange.end)
 
-
-
     window.history.pushState({}, '', url);
 }
 function loadFromURL() {
@@ -191,27 +189,43 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   
-  document.getElementById("share").onclick = function () {
-      if (selectedRange.start == null){
-      navigator.share({
-        title: `${book} ${chapter}`,
-        text: `${book} ${chapter} on Verbum`,
-        url: `${window.location.pathname}`
-      });
-    } else if (selectedRange.start == selectedRange.end){
-      navigator.share({
-        title: `${book} ${chapter}`,
-        text: `${book} ${chapter}:${selectedRange.start} on Verbum`,
-        url: `${window.location.pathname}`
-      });
-    } else if (selectedRange.start != selectedRange.end){
-      navigator.share({
-        title: `${book} ${chapter}`,
-        text: `${book} ${chapter}:${selectedRange.start}-${selectedRange.end} on Verbum`,
-        url: `${window.location.pathname}`
-      });
+document.getElementById("share").onclick = async function () {
+  // 1. Construct the specific URL for this highlight
+  const url = new URL(window.location.href);
+  url.searchParams.set('book', book);
+  url.searchParams.set('chapter', chapter);
+  url.searchParams.set('selectRangeStart', selectedRange.start);
+  url.searchParams.set('selectRangeEnd', selectedRange.end);
+
+  let shareText = `${book} ${chapter}`;
+
+  // 2. Format the text description
+  if (selectedRange.start !== null) {
+    if (selectedRange.start === selectedRange.end) {
+      shareText += `:${selectedRange.start}`;
+    } else {
+      shareText += `:${selectedRange.start}-${selectedRange.end}`;
     }
-  };
+  }
+  shareText += " on Verbum";
+
+  // 3. Check for support and share
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: shareText,
+        text: shareText,
+        url: url.toString() // This sends the link WITH the chapter/verses
+      });
+    } catch (err) {
+      console.error("Share failed:", err);
+    }
+  } else {
+    // Fallback: Copy to clipboard if Share API isn't available
+    navigator.clipboard.writeText(url.toString());
+    alert("Link copied to clipboard!");
+  }
+};
 
 
   
