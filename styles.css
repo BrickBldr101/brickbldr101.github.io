@@ -95,15 +95,15 @@ select{
 
 #verse{
 
-    width: 700px;
-    text-align: center;
+    margin: auto;
+    width: 700px
     
     
 }
 
 @media (max-width: 600px) {
     #verse{
-    width: 100%;
+    width: 90%;
 
 }
 }
