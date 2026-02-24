@@ -107,3 +107,9 @@ select{
 
 }
 }
+
+#bibleStudytext{
+    width: 700px;
+    margin: auto;
+    text-align: center;
+}
