@@ -4,7 +4,7 @@ html, body{
     background-color: rgb(255, 255, 255);
 }
 
-h1{
+#title{
     margin: 0;
     padding: 0;
     margin-bottom: 0;
@@ -29,11 +29,6 @@ main{
     flex-direction: column;
 }
 
-#verse{
-    margin-top: 1%;
-    text-align: center;
-}
-
 .header{
     position:relative;
     display:flex;
@@ -47,14 +42,6 @@ main{
     display: flex;
 }
 
-#input{
-    margin-top:0.5%;
-    margin-right: 10px;
-    z-index: 2;
-    
-    text-align: right;
-}
-
 #HOME{
     margin-top: 0.1%;
     margin-left: 10px;
@@ -66,20 +53,6 @@ main{
 #other{
     text-align: center;
     margin-top: 10px;
-}
-
-#textbox{
-    color:black;
-    border-width: 3px;
-    background-color: crimson;
-    border-style: solid;
-    border-color: black;
-}
-
-.buttons{
-    border-color: black;
-    color: white;
-    background-color: crimson;
 }
 
 .footer{
@@ -98,14 +71,13 @@ p{
     margin-bottom: 0px;
 }
 
-#verse{
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
 select{
     border-color: black;
     color: black;
     background-color: crimson;
     border-radius: 0px;
+}
+
+#biblestudy{
+    padding: -100px;
 }
