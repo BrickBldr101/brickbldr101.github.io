@@ -14,6 +14,7 @@ h1{
     flex: 0;
     z-index: 2;
     font-size: 1.7rem;
+    margin-right: 20px;
 }
 
 main{
@@ -95,4 +96,16 @@ main{
 p{
     margin-top: 0px;
     margin-bottom: 0px;
+}
+
+#verse{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+select{
+    border-color: black;
+    color: black;
+    background-color: crimson;
+    border-radius: 0px;
 }

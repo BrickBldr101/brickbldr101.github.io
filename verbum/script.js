@@ -5,6 +5,8 @@ let chapter = "";
 let nextChapter = 1;
 let lastChapter = 1;
 
+window.onload = loadFromURL;
+
 fetchVerse = function(selectedBook, selectedChapter, translation, highlightVerse = null) {
   book = selectedBook;
   chapter = Number(selectedChapter);
@@ -53,7 +55,8 @@ fetchVerse = function(selectedBook, selectedChapter, translation, highlightVerse
               [selectedRange.end, selectedRange.start];
             }
           }
-
+          
+          updateURL(book, chapter);
           fetchVerse(book, chapter, translation); // re-render
         };
 
@@ -63,6 +66,45 @@ fetchVerse = function(selectedBook, selectedChapter, translation, highlightVerse
     })
     .catch(error => console.error(error));
 };
+
+function updateURL(book, chapter) {
+    const url = new URL(window.location);
+
+    url.searchParams.set('book', book);
+    url.searchParams.set('chapter', chapter);
+    url.searchParams.set('selectRangeStart', selectedRange.start)
+    url.searchParams.set('selectRangeEnd', selectedRange.end)
+
+
+
+    window.history.pushState({}, '', url);
+}
+function loadFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    const bookParam = params.get('book');
+    const chapterParam = params.get('chapter');
+    const startParam = params.get('selectRangeStart');
+    const endParam = params.get('selectRangeEnd');
+
+    if (bookParam && chapterParam) {
+        // 1. Update the UI dropdowns to match the URL
+        const bookSelect = document.getElementById("book-select");
+        const chapterSelect = document.getElementById("chapter-select");
+        
+        bookSelect.value = bookParam;
+        populateChapters(bookParam); // Rebuild chapter list for this book
+        chapterSelect.value = chapterParam;
+
+        // 2. Load the highlights into our global variable
+        if (startParam && endParam) {
+            selectedRange.start = Number(startParam);
+            selectedRange.end = Number(endParam);
+        }
+
+        // 3. Actually fetch and render the verses
+        fetchVerse(bookParam, chapterParam);
+    }
+}
 
 // make the chapters based on the book
 function populateChapters(bookSelectValue) {
@@ -94,35 +136,6 @@ function populateChapters(bookSelectValue) {
   }
 }
 
-// load book and chapter based on the url
-function loadFromURL() {
-  const params = new URLSearchParams(window.location.search);
-  const urlBook = params.get("book");
-  const urlChapter = params.get("chapter");
-  const urlVerse = params.get("verse");
-
-  const bookSelect = document.getElementById("book-select");
-  const chapterSelect = document.getElementById("chapter-select");
-
-  if (urlBook && urlChapter) {
-    bookSelect.value = urlBook;
-    populateChapters(urlBook);
-
-    const chapterNum = Number(urlChapter);
-    chapterSelect.value = chapterNum;
-
-    fetchVerse(urlBook, chapterNum, urlVerse);
-
-    nextChapter = chapterNum + 1;
-    lastChapter = chapterNum - 1;
-  } else {
-    fetchVerse(bookSelect.value, 1);
-    nextChapter = 2;
-    lastChapter = 0;
-  }
-}
-
-
 document.addEventListener("DOMContentLoaded", () => {
   const bookSelect = document.getElementById("book-select");
   const chapterSelect = document.getElementById("chapter-select");
@@ -135,6 +148,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const selectedBook = event.target.value;
     populateChapters(selectedBook, chapterSelect.value);
     fetchVerse(selectedBook, 1, translationSelect.value);
+    document.title = `${bookSelect.value} ${chapterSelect.value} - Verbum`;
+    updateURL(bookSelect.value, chapterSelect.value);
     selectedRange.start = selectedRange.end = null;
     nextChapter = 2;
     lastChapter = 0;
@@ -143,6 +158,8 @@ document.addEventListener("DOMContentLoaded", () => {
   chapterSelect.addEventListener("change", (event) => {
     const selectedChapter = event.target.value;
     fetchVerse(bookSelect.value, selectedChapter, translationSelect.value);
+    document.title = `${bookSelect.value} ${chapterSelect.value} - Verbum`;
+    updateURL(bookSelect.value, chapterSelect.value);
     selectedRange.start = selectedRange.end = null;
     nextChapter = Number(selectedChapter) + 1;
     lastChapter = Number(selectedChapter) - 1;
@@ -152,18 +169,24 @@ document.addEventListener("DOMContentLoaded", () => {
   translationSelect.addEventListener("change", (event) => {
     const selectedTranslation = event.target.value;
     fetchVerse(bookSelect.value, chapterSelect.value, selectedTranslation)
+    document.title = `${bookSelect.value} ${chapterSelect.value} - Verbum`;
+    updateURL(bookSelect.value, chapterSelect.value);
   })
 
 
   document.getElementById("nextChapter").onclick = function() {
     const currentChapter = Number(document.getElementById("chapter-select").value);
     fetchVerse(bookSelect.value, currentChapter + 1);
+    document.title = `${bookSelect.value} ${chapterSelect.value} - Verbum`;
+    updateURL(bookSelect.value, chapterSelect.value);
     document.getElementById("chapter-select").value = currentChapter + 1;
   };
 
   document.getElementById("lastChapter").onclick = function() {
     const currentChapter = Number(document.getElementById("chapter-select").value);
     fetchVerse(bookSelect.value, currentChapter - 1);
+    document.title = `${bookSelect.value} ${chapterSelect.value} - Verbum`;
+    updateURL(bookSelect.value, chapterSelect.value);
     document.getElementById("chapter-select").value = currentChapter - 1;
   };
 
@@ -201,5 +224,6 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   */
-  loadFromURL();
+  //loadFromURL();
+  
 });
