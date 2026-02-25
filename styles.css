@@ -180,3 +180,9 @@ select{
     display: flex;
     padding-left: 10px;
 }
+
+nav{
+    display: flex;
+    padding-top: 0.5%;
+    z-index: 2;
+}
