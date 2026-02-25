@@ -45,6 +45,8 @@ main{
     padding-bottom: 0px;
     display: flex;
     margin-bottom: 0px;
+    z-index: 0;
+    flex: 0;
 }
 
 /* Button to get to different windows */
@@ -164,4 +166,10 @@ select{
     background-image: 
     linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)),
     url(/assets/calendar.jpg);
+}
+
+#HOME{
+    z-index: 2;
+    flex: 0;
+    display: flex;
 }
