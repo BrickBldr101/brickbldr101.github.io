@@ -133,6 +133,7 @@ select{
     
 }
 
+/* The border around the scripture */
 .box{
     border: 2px solid black;
     border-radius: 4px;
@@ -167,7 +168,7 @@ select{
 
 }
 
-/* Button for days in January Bible in a year */
+/* Buttons for months Bible in a year */
 
 .biblestudybutton{
 
@@ -255,7 +256,7 @@ select{
 
 #unashamed{
     background-image: 
-        linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)),
+        linear-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0.3)),
         url(/assets/fire.jpg);
     background-position: 70%;
 }
