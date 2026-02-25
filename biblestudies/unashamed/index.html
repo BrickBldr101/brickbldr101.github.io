@@ -17,14 +17,7 @@
     </head>
     <body>
         <div class="page"> 
-            <div class="header">
-                <div id="headerBox"></div>
-                <div id="HOME">
-                    <a href=".."><button type="button" class="buttons" id="home"><img src="assets/house.svg"></button></a>
-                    
-                </div>
-                <h1 id="title">Verbum</h1>
-            </div>
+            <div id="header"></div>
             <main>
                 <div id="bibleStudytext">
                     <h1 id="biblestudy">Unashamed: Standing Strong in Your Faith</h1>
@@ -97,18 +90,9 @@
                     <hr>
                 </div>
             </main>
-            <div class="footer"><p></p>
+            <div id="footer">
             </div>
         </div>
-        <script src="script.js?v=2.1.1"></script>
-        <script>
-            fetch("header.html")
-            .then(response => response.text())
-            .then(data => document.getElementById("header").innerHTML = data);
-
-            fetch("footer.html")
-            .then(response => response.text())
-            .then(data => document.getElementById("footer").innerHTML = data);
-        </script>
+        <script src="/load.js?v=0.0.1"></script>
     </body>
 </html>
