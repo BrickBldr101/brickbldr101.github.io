@@ -7,6 +7,8 @@ let lastChapter = 1;
 
 window.onload = loadFromURL;
 
+
+
 fetchVerse = function(selectedBook, selectedChapter, translation, highlightVerse = null) {
   book = selectedBook;
   chapter = Number(selectedChapter);
