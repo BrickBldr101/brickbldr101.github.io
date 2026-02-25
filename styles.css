@@ -92,7 +92,7 @@ p{
 select{
     border-color: black;
     color: black;
-    background-color: crimson;
+    background-color: rgb(137, 160, 170);
     border-radius: 0px;
 }
 
@@ -105,7 +105,7 @@ select{
 .buttons{
     border-color: black;
     color: black;
-    background-color: crimson;
+    background-color: rgb(159, 174, 179);
 }
 
 /* Menu button */
@@ -121,16 +121,20 @@ select{
 .share{
     border-color: black;
     color: black;
-    background-color: rgb(230, 227, 227);
+    background-color: rgb(198, 218, 216);
 
 }
 
 /* The text you read */
 #verse{
-
+   
     margin: auto;
     width: 700px
     
+}
+
+.box{
+    border: 2px solid black;
 }
 
 #bibleStudytext{
@@ -139,8 +143,10 @@ select{
     text-align: center;
 }
 
+/* Mobile version */
 @media (max-width: 600px) {
     #verse{
+        
         width: 90%;
     }
 
