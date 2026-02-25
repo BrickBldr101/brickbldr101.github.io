@@ -127,7 +127,7 @@ select{
 
 /* The text you read */
 #verse{
-   
+    
     margin: auto;
     width: 700px
     
@@ -135,8 +135,10 @@ select{
 
 .box{
     border: 2px solid black;
+    border-radius: 4px;
 }
 
+/* Centers the text in the bible plans/studys */
 #bibleStudytext{
     width: 50%;
     margin: auto;
@@ -146,7 +148,7 @@ select{
 /* Mobile version */
 @media (max-width: 600px) {
     #verse{
-        
+        border: 0px;
         width: 90%;
     }
 
@@ -165,6 +167,35 @@ select{
 
 }
 
+/* Button for days in January Bible in a year */
+.biblestudybuttonJan{
+    margin-left: -10%;
+    width: 200px;
+    height: 100px;
+    border-radius: 10px;
+}
+
+.biblestudybuttonFeb{
+    margin-left: 10%;
+    width: 200px;
+    height: 100px;
+    border-radius: 10px;
+}
+
+/* Image for the January bible in a year plan*/
+#bibleinayearjan{
+    background-image: 
+    url(/assets/January.jpg);
+    background-size: 100%;
+    background-position: 30%;
+}
+
+#bibleinayearfeb{
+    background-image: 
+    url(/assets/Febuary.jpg) ;
+    background-position: 40%;
+}
+
 #unashamed{
     background-image: 
         linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)),
@@ -172,6 +203,7 @@ select{
     background-position: 70%;
 }
 
+/* Image for the bible in a year plan*/
 #bibleinayear{
     background-image: 
     linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)),

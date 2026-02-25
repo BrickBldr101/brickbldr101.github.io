@@ -11,18 +11,25 @@
         <meta property="og:image" content="https://brickbldr101.github.io/assets/cross.png">
         <meta property="og:url" content="https://brickbldr101.github.io/">
         <meta property="og:type" content="website">
-        <link rel="stylesheet" href="../styles.css?1.2.0">
+        <link rel="stylesheet" href="/styles.css?1.2.0">
         <title>Verbum</title>
         <link rel="icon" type="image/png" href="https://brickbldr101.github.io/assets/cross.png">
     </head>
     <body>
-        <div id="header"></div>
         <div class="page"> 
+            <div id="header"></div>
             <main>
-                <h1 id="biblestudy">Reading plans</h1>
-                <button onclick="window.location.href='bibleinayearmonth'" class="biblestudyButtons" id="bibleinayear">Bible in a year</button>
+                <div id="bibleStudytext">
+                    <h1 id="biblestudy">Bible in a year</h1>
+
+                <button onclick="window.location.href='bibleinayeardays/January'" class="biblestudybuttonJan" id="bibleinayearjan"></button>
+                <button onclick="window.location.href='bibleinayeardays/Febuary'" class="biblestudybuttonFeb" id="bibleinayearfeb"></button>
+
+                
+                </div>
             </main>
             <div id="footer"></div>
+            </div>
         </div>
         <script src="/load.js?v=0.0.1"></script>
     </body>
