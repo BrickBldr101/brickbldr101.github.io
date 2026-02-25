@@ -139,7 +139,7 @@ select{
 }
 
 /* Centers the text in the bible plans/studys */
-#bibleStudytext{
+.bibleStudytext{
     width: 50%;
     margin: auto;
     text-align: center;
@@ -152,7 +152,7 @@ select{
         width: 90%;
     }
 
-    #bibleStudytext{
+    .bibleStudytext{
         width: 90%;
         margin: auto;
         text-align: center;

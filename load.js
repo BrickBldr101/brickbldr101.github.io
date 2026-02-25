@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <ul class="nav-links" id="nav-menu">
                     <li><a href="/readingplans/">Reading plans</a></li>
                     <li><a href="/biblestudies/">Bible studies</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="/contactus">Contact</a></li>
                 </ul>
             </div>
         </nav>
@@ -120,7 +120,11 @@ document.addEventListener("DOMContentLoaded", function() {
     const footerDiv = document.getElementById('footer');
     footerDiv.innerHTML = `
         <footer style="padding:20px; text-align:center; background:#2c3e50; color:white;">
-            &copy; ${new Date().getFullYear()} Verbum. All rights reserved.
+        <a href="/" style="color:#ecf0f1; text-decoration:none; font-weight:bold;">Verbum</a><br>
+        <a href="/contactus" style="color:#ecf0f1; text-decoration:none; font-weight:bold;">Contact</a><br>
+        <a href="/biblestudies" style="color:#ecf0f1; text-decoration:none; font-weight:bold;">Group bible studies</a><br>
+        <a href="/readingplans" style="color:#ecf0f1; text-decoration:none; font-weight:bold;">Reading plans</a><br>
+        &copy; ${new Date().getFullYear()} Noah McCracken & JJ Freeland. All rights reserved.
         </footer>
     `;
 });
