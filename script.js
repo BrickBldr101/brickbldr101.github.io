@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const selectedBook = event.target.value;
     populateChapters(selectedBook, chapterSelect.value);
     fetchVerse(selectedBook, 1, translationSelect.value);
-    document.title = `${bookSelect.value} ${chapterSelect.value} - Verbum`;
+    document.title = `${bookSelect.value} ${chapterSelect.value} -  Verbum Bible`;
     updateURL(bookSelect.value, chapterSelect.value);
     selectedRange.start = selectedRange.end = null;
     nextChapter = 2;
@@ -158,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
   chapterSelect.addEventListener("change", (event) => {
     const selectedChapter = event.target.value;
     fetchVerse(bookSelect.value, selectedChapter, translationSelect.value);
-    document.title = `${bookSelect.value} ${chapterSelect.value} - Verbum`;
+    document.title = `${bookSelect.value} ${chapterSelect.value} -  Verbum Bible`;
     updateURL(bookSelect.value, chapterSelect.value);
     selectedRange.start = selectedRange.end = null;
     nextChapter = Number(selectedChapter) + 1;
@@ -169,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
   translationSelect.addEventListener("change", (event) => {
     const selectedTranslation = event.target.value;
     fetchVerse(bookSelect.value, chapterSelect.value, selectedTranslation)
-    document.title = `${bookSelect.value} ${chapterSelect.value} - Verbum`;
+    document.title = `${bookSelect.value} ${chapterSelect.value} -  Verbum Bible`;
     updateURL(bookSelect.value, chapterSelect.value);
   })
 
@@ -177,7 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("nextChapter").onclick = function() {
     const currentChapter = Number(document.getElementById("chapter-select").value);
     fetchVerse(bookSelect.value, currentChapter + 1);
-    document.title = `${bookSelect.value} ${chapterSelect.value} - Verbum`;
+    document.title = `${bookSelect.value} ${chapterSelect.value} -  Verbum Bible`;
     updateURL(bookSelect.value, chapterSelect.value);
     document.getElementById("chapter-select").value = currentChapter + 1;
   };
@@ -185,7 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("lastChapter").onclick = function() {
     const currentChapter = Number(document.getElementById("chapter-select").value);
     fetchVerse(bookSelect.value, currentChapter - 1);
-    document.title = `${bookSelect.value} ${chapterSelect.value} - Verbum`;
+    document.title = `${bookSelect.value} ${chapterSelect.value} -  Verbum Bible`;
     updateURL(bookSelect.value, chapterSelect.value);
     document.getElementById("chapter-select").value = currentChapter - 1;
   };
@@ -209,7 +209,7 @@ document.getElementById("share").onclick = async function () {
       shareText += `:${selectedRange.start}-${selectedRange.end}`;
     }
   }
-  shareText += " on Verbum";
+  shareText += " on Verbum Bible";
 
   // 3. Check for support and share
   if (navigator.share) {
