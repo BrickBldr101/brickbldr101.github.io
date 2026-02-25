@@ -36,6 +36,7 @@ main{
     padding-bottom: 0px;
 }
 
+/* Long box at the top that holds the menu and the name */
 #headerBox{
     position: absolute;
     width: 100%;
@@ -46,7 +47,8 @@ main{
     margin-bottom: 0px;
 }
 
-#HOME{
+/* Button to get to different windows */
+#MENU{
     margin-top: 0.1%;
     margin-left: 10px;
     z-index: 2;
@@ -59,6 +61,7 @@ main{
     margin-top: 10px;
 }
 
+/* Long box at the bottem that holds Bible studies */
 .footer{
     text-align: center;
     position: static;
@@ -75,6 +78,7 @@ p{
     margin-bottom: 0px;
 }
 
+/* Buttons to choose version chapter and verse */
 select{
     border-color: black;
     color: black;
@@ -87,26 +91,46 @@ select{
     margin-top: 0;
 }
 
+/* Back, and Next buttons */
 .buttons{
     border-color: black;
-    color: white;
+    color: black;
     background-color: crimson;
 }
 
+/* Menu button */
+.menu{
+    border-color: black;
+    color: black;
+    background-color: lightgrey;
+
+}
+
+
+/* Share button */
+.share{
+    border-color: black;
+    color: black;
+    background-color: rgb(230, 227, 227);
+
+}
+
+/* The text you read */
 #verse{
 
     margin: auto;
     width: 700px
     
-    
 }
 
+/* The text when on mobile */
 @media (max-width: 600px) {
     #verse{
     width: 90%;
 
 }
 }
+
 
 #bibleStudytext{
     width: 700px;
