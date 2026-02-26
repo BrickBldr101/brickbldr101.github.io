@@ -92,7 +92,17 @@ select{
 .buttons{
     border-color: black;
     color: black;
-    background-color: rgb(159, 174, 179);
+    /*background-color: rgb(159, 174, 179);*/
+    background-color: transparent;
+    border:0;
+    width: 50px;
+    height: 50px;
+
+}
+
+.buttons img{
+    width: 50px;
+    height: 50px;
 }
 
 /* Menu button */
@@ -112,10 +122,20 @@ select{
 
 }
 
+/* Navigation container with verse and chapter buttons */
+.chapter-nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* space between buttons and text */
+}
+
 /* The text you read */
 #verse{
     margin: auto;
-    width: 700px
+    /* let container control overall size, use max-width instead */
+    max-width: 700px;
+    flex: 1; /* allow verse to grow/shrink within nav container */
     
 }
 
@@ -145,6 +165,10 @@ select{
         text-align: center;
     }   
 
+    /* put nav buttons above/below verse on small screens */
+    .chapter-nav-container{
+        flex-direction: column;
+    }
 }
 
 .biblestudyButtons{
@@ -267,4 +291,14 @@ nav{
     display: flex;
     padding-top: 0.5%;
     z-index: 2;
+}
+
+#share{
+    width: 20;
+    height: 20;
+}
+
+#share img{
+    width: 20px;
+    height: 20px;
 }
