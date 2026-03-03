@@ -302,3 +302,29 @@ nav{
     width: 20px;
     height: 20px;
 }
+
+
+.nav-left,
+.nav-right {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+}
+
+/* Left side */
+.nav-left {
+    left: 15px;
+}
+
+/* Right side */
+.nav-right {
+    right: 15px;
+}
+
+/* Optional hover effect */
+.nav-left:hover,
+.nav-right:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
