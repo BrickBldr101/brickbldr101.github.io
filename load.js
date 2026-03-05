@@ -82,6 +82,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         </style>
 
+        //Top Heading
         <nav class="navbar">
             <div class="nav-container">
                 <a href="/" class="logo">Verbum Bible</a>
@@ -89,11 +90,14 @@ document.addEventListener("DOMContentLoaded", function() {
                     <span></span>
                     <span></span>
                     <span></span>
+                    
                 </button>
                 <ul class="nav-links" id="nav-menu">
                     <li><a href="/readingplans/">Reading plans</a></li>
                     <li><a href="/biblestudies/">Bible studies</a></li>
                     <li><a href="/contactus">Contact & Support</a></li>
+                    <li><a href="/listentomusic"><img src="/assets/music-player-fill.svg"></a></li>
+                    
                 </ul>
             </div>
         </nav>
