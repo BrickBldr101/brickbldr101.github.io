@@ -82,7 +82,6 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         </style>
 
-        //Top Heading
         <nav class="navbar">
             <div class="nav-container">
                 <a href="/" class="logo">Verbum Bible</a>
@@ -131,4 +130,15 @@ document.addEventListener("DOMContentLoaded", function() {
         &copy; ${new Date().getFullYear()} Noah McCracken & JJ Freeland. All rights reserved.
         </footer>
     `;
+
+//Audio
+var x = document.getElementById("HereIAmToWorship")
+
+function playMusic(){
+  x.play();
+}
+
+function pauseMusic(){
+  x.pause();
+}
 });

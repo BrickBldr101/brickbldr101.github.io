@@ -232,3 +232,14 @@ document.getElementById("share").onclick = async function () {
 
   
 });
+
+//Audio
+var x = document.getElementById("HereIAmToWorship")
+
+function playMusic(){
+  x.play();
+}
+
+function pauseMusic(){
+  x.pause();
+}

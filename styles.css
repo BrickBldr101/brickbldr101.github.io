@@ -305,6 +305,9 @@ nav{
     height: 20px;
 }
 
+.playtracks{
+    margin-top: 100px;
+}
 
 @media (min-width: 600px){
     .nav-left,
