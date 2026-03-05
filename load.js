@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     <li><a href="/readingplans/">Reading plans</a></li>
                     <li><a href="/biblestudies/">Bible studies</a></li>
                     <li><a href="/contactus">Contact & Support</a></li>
-                    <li><a href="/listentomusic"><img src="/assets/music-player-fill.svg"></a></li>
+                    <li><a href="/listentomusic">Music</a></li>
                     
                 </ul>
             </div>
