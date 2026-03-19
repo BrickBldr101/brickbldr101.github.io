@@ -29,7 +29,7 @@ fetchVerse = function(selectedBook, selectedChapter, translation, highlightVerse
         const text = chapterData[verseNum];
 
         const span = document.createElement("span");
-        span.innerHTML = `<b>${verseNum}</b> ${text} `;
+        span.innerHTML = `<b style="font-size: 7px;">${verseNum}</b> ${text} `;
         span.style.cursor = "pointer";
 
         const vNum = Number(verseNum);
